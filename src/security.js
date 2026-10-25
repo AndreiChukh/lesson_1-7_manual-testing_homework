@@ -24,6 +24,14 @@ export function checkActivity(action, details = {}) {
         localStorage.setItem(CANARY_KEY, JSON.stringify({ role: 'visitor' }));
       }
     } catch {}
+
+    const url = new URL(window.location.href);
+
+    if (url.searchParams.getAll('staff').includes('1')) {
+      reportIncident('T6', 'В адресе обнаружен параметр staff=1.');
+      url.searchParams.delete('staff');
+      window.history.replaceState(window.history.state, '', url);
+    }
   }
 
   if (
