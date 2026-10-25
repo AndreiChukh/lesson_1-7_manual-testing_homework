@@ -1,6 +1,7 @@
 import { PREFIX } from './api.js';
 
 export const CANARY_KEY = `${PREFIX}canary`;
+let refreshTimes = [];
 
 // Временный вывод для проверки ловушек. Постоянный журнал добавляется в бонусе.
 export function reportIncident(type, reason) {
@@ -14,6 +15,15 @@ export function reportIncident(type, reason) {
 
 // События: startup, refresh, submit, decoy. Условия ловушек добавьте здесь.
 export function checkActivity(action, details = {}) {
+  if (action !== 'refresh') return;
+
+  const now = Date.now();
+  refreshTimes = refreshTimes.filter(time => now - time < 5000);
+  refreshTimes.push(now);
+
+  if (refreshTimes.length === 6) {
+    reportIncident('T1', 'Шесть попыток обновить список за 5 секунд.');
+  }
 }
 
 // Приложение вызывает эту функцию перед отправкой и обновлением списка.
@@ -31,6 +41,7 @@ export function initializeSecurity() {
 }
 
 export function resetSecurity() {
+  refreshTimes = [];
   try {
     for (const key of Object.keys(localStorage)) {
       if (key.startsWith(PREFIX) && key !== `${PREFIX}applications`) localStorage.removeItem(key);
