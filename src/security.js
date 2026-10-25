@@ -15,6 +15,14 @@ export function reportIncident(type, reason) {
 
 // События: startup, refresh, submit, decoy. Условия ловушек добавьте здесь.
 export function checkActivity(action, details = {}) {
+  if (
+    action === 'submit' &&
+    details.topic &&
+    !['html', 'javascript', 'api'].includes(details.topic)
+  ) {
+    reportIncident('T4', 'При отправке обнаружено неизвестное направление.');
+  }
+
   if (action === 'decoy') {
     reportIncident('T3', 'Вызвана скрытая кнопка staff-export.');
   }
