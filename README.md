@@ -85,6 +85,8 @@ DOM, события, формы, JSON и localStorage уже были в мод�
 | Работа с готовыми модулями | `JavaScript import export ES modules relative path` |
 | Публикация | `GitHub Pages publishing source branch relative paths` |
 
+GitHub Pages: https://andreichukh.github.io/lesson_1-7_manual-testing_homework/
+
 ## Сдача
 
 Один PR в собственном fork: код, `TESTING.md`, список выполненных бонусов и ссылка Pages, если этот пункт заявлен. Видеозапись и отдельное ТЗ не нужны.
