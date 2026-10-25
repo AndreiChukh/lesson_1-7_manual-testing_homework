@@ -76,8 +76,7 @@ function renderApplications() {
     arrow.setAttribute('aria-hidden', 'true');
     body.append(name, topic, comment);
     card.append(index, body, arrow);
-    card.addEventListener('click', event => {
-      if (event.target !== card) return;
+    card.addEventListener('click', () => {
       selectedId = application.id;
       renderApplications();
     });
