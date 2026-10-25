@@ -15,6 +15,17 @@ export function reportIncident(type, reason) {
 
 // События: startup, refresh, submit, decoy. Условия ловушек добавьте здесь.
 export function checkActivity(action, details = {}) {
+  if (action === 'startup') {
+    try {
+      const canary = JSON.parse(localStorage.getItem(CANARY_KEY));
+
+      if (canary?.role === 'admin') {
+        reportIncident('T5', 'Обнаружена подмена маркера canary на admin.');
+        localStorage.setItem(CANARY_KEY, JSON.stringify({ role: 'visitor' }));
+      }
+    } catch {}
+  }
+
   if (
     action === 'submit' &&
     details.topic &&
