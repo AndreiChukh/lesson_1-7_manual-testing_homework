@@ -117,6 +117,9 @@ form.addEventListener('submit', async event => {
     const response = await createApplication({ ...values, name: values.name.trim() });
     const result = await response.json();
     if (currentRevision !== revision) return;
+    if (!response.ok) {
+      throw new Error(result.error?.message || `Ошибка ${response.status}`);
+    }
     setFormStatus('Заявка сохранена. Спасибо!', 'success');
     form.reset();
     await loadApplications();
